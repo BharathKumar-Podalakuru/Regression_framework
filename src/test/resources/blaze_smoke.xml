@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="BlazeDemoSmokeSuite" parallel="classes" thread-count="4">
+    <test name="BlazeDemo UI Smoke">
+        <classes>
+            <class name="com.example.ui.BlazeDemoUITest"/>
+        </classes>
+    </test>
+</suite>

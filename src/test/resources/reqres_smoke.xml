@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="ReqResSmokeSuite" parallel="methods" thread-count="8">
+    <test name="ReqRes API Smoke">
+        <classes>
+            <class name="com.example.api.ReqResAPITest"/>
+        </classes>
+    </test>
+</suite>

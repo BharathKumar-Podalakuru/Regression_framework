@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<!-- Sequential run for baseline evidence -->
+<suite name="AutomatedTestSuiteSequential" parallel="false" thread-count="1">
+    <listeners>
+        <listener class-name="com.example.report.SuiteReportGenerator"/>
+    </listeners>
+    <test name="BlazeDemo UI Tests">
+        <classes>
+            <class name="com.example.ui.BlazeDemoUITest"/>
+        </classes>
+    </test>
+    <test name="ReqRes API Tests">
+        <classes>
+            <class name="com.example.api.ReqResAPITest"/>
+        </classes>
+    </test>
+</suite>
+
+<!-- Parallel run for demonstration -->
+<suite name="AutomatedTestSuiteParallel" parallel="methods" thread-count="10">
+    <listeners>
+        <listener class-name="com.example.report.SuiteReportGenerator"/>
+    </listeners>
+    <test name="BlazeDemo UI Tests">
+        <classes>
+            <class name="com.example.ui.BlazeDemoUITest"/>
+        </classes>
+    </test>
+    <test name="ReqRes API Tests">
+        <classes>
+            <class name="com.example.api.ReqResAPITest"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,24 @@
+US ID,TC ID,Test Case Description,Status,Duration (ms)
+US-301,TC-301.1,Verify home page loads,Passed,1324
+US-301,TC-301.2,Verify dropdown options,Passed,1400
+US-302,TC-302.1,Search flights Boston → London,Passed,2175
+US-302,TC-302.2,Search flights New York → Paris,Passed,2189
+US-303,TC-303.1,Choose first flight,Passed,2699
+US-303,TC-303.2,Verify price consistency,Passed,2826
+US-304,TC-304.1,Complete booking (valid details),Passed,3993
+US-304,TC-304.2,Booking with empty fields,Passed,4032
+US-304,TC-304.3,Booking with invalid card,Passed,4868
+US-305,TC-305.1,End-to-end booking flow,Passed,4493
+US-401,TC-401.1,Get list of users (page 2),Passed,214
+US-401,TC-401.2,Get single user (id=2),Passed,489
+US-401,TC-401.3,Get single user (id=23, not found),Passed,460
+US-402,TC-402.1,Create user,Passed,3849
+US-402,TC-402.2,Update user (PUT),Passed,377
+US-402,TC-402.3,Patch user,Passed,327
+US-402,TC-402.4,Delete user,Passed,352
+US-403,TC-403.1,Register (valid details),Skipped,0
+US-403,TC-403.2,Register (missing password),Passed,349
+US-403,TC-403.3,Login (valid credentials),Skipped,0
+US-503,TC-503.1,Place order for pet,Passed,1445
+US-503,TC-503.2,Get order by ID (invalid),Passed,4182
+US-503,TC-503.3,Get inventory,Passed,0
