@@ -58,9 +58,8 @@ public class BlazeDemoUITest {
         String executionId = System.getProperty("executionId", "manual");
         String testCaseId = result.getMethod().getMethodName();
         boolean isFailure = result.getStatus() == ITestResult.FAILURE;
-        boolean isAlwaysScreenshot = testCaseId.equals("testEndToEndBookingFlow_TC_UI_10");
         try {
-            if ((isFailure || isAlwaysScreenshot) && driver != null) {
+            if (isFailure && driver != null) {
                 ScreenshotUtil.takeScreenshot(driver, executionId, testCaseId);
             }
         } catch (Exception e) {
@@ -86,9 +85,20 @@ public class BlazeDemoUITest {
             Assert.fail("WebDriver was not initialized. Check @BeforeMethod setup.");
         }
     driver.get("https://blazedemo.com/");
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testHomePageLoad_TC_UI_01");
     logger.info("[US-301][TC-301.1][Thread {}] Home page load", Thread.currentThread().getId());
         Assert.assertTrue(driver.getTitle().contains("BlazeDemo"));
+    }
+
+    /** Demo test that will fail to show screenshot capture */
+    @Test(description = "Demo test that will intentionally fail", timeOut = 120000)
+    public void testDemoFailure() {
+        if (driver == null) {
+            Assert.fail("WebDriver was not initialized. Check @BeforeMethod setup.");
+        }
+        driver.get("https://blazedemo.com/");
+        logger.info("[DEMO][Thread {}] This test will fail intentionally", Thread.currentThread().getId());
+        // This assertion will fail to demonstrate screenshot capture
+        Assert.assertTrue(driver.getTitle().contains("NonExistentTitle"), "This test fails intentionally to demo screenshot capture");
     }
 
     /** TC-UI-02: US-301 TC-301.2 Verify dropdown options */
@@ -98,7 +108,6 @@ public class BlazeDemoUITest {
             Assert.fail("WebDriver was not initialized. Check @BeforeMethod setup.");
         }
     driver.get("https://blazedemo.com/");
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testDropdownsPresent_TC_UI_02");
     logger.info("[US-301][TC-301.2][Thread {}] Dropdowns present", Thread.currentThread().getId());
         WebElement departure = driver.findElement(By.name("fromPort"));
         WebElement destination = driver.findElement(By.name("toPort"));
@@ -115,7 +124,6 @@ public class BlazeDemoUITest {
     driver.findElement(By.name("fromPort")).sendKeys("Boston");
     driver.findElement(By.name("toPort")).sendKeys("London");
     driver.findElement(By.cssSelector("input[type='submit']")).click();
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testFlightSearchBostonLondon_TC_UI_03");
     logger.info("[US-302][TC-302.1][Thread {}] Flight search Boston-London", Thread.currentThread().getId());
         Assert.assertTrue(driver.getTitle().contains("BlazeDemo - reserve"));
     }
@@ -130,7 +138,6 @@ public class BlazeDemoUITest {
     driver.findElement(By.name("fromPort")).sendKeys("New York");
     driver.findElement(By.name("toPort")).sendKeys("Paris");
     driver.findElement(By.cssSelector("input[type='submit']")).click();
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testFlightSearchNYParis_TC_UI_04");
     logger.info("[US-302][TC-302.2][Thread {}] Flight search NY-Paris", Thread.currentThread().getId());
         Assert.assertTrue(driver.getTitle().contains("BlazeDemo - reserve"));
     }
@@ -152,7 +159,6 @@ public class BlazeDemoUITest {
     driver.findElement(By.id("state")).sendKeys("MA");
     driver.findElement(By.id("zipCode")).sendKeys("02118");
     driver.findElement(By.cssSelector("input[type='submit']")).click();
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testBookingFlowValid_TC_UI_05");
     logger.info("[US-304][TC-304.1][Thread {}] Booking flow valid", Thread.currentThread().getId());
         Assert.assertTrue(driver.getPageSource().contains("Thank you for your purchase today!"));
     }
@@ -174,7 +180,6 @@ public class BlazeDemoUITest {
     driver.findElement(By.id("state")).sendKeys("");
     driver.findElement(By.id("zipCode")).sendKeys("");
     driver.findElement(By.cssSelector("input[type='submit']")).click();
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testBookingEmptyFields_TC_UI_06");
     logger.info("[US-304][TC-304.2][Thread {}] Booking empty fields", Thread.currentThread().getId());
         String pageSource = driver.getPageSource();
         boolean hasError = pageSource.contains("error") || pageSource.contains("failed") || pageSource.contains("Invalid") || pageSource.contains("purchase");
@@ -199,7 +204,6 @@ public class BlazeDemoUITest {
     driver.findElement(By.id("zipCode")).sendKeys("02118");
     driver.findElement(By.id("creditCardNumber")).sendKeys("0000 0000 0000 0000"); // Invalid card
     driver.findElement(By.cssSelector("input[type='submit']")).click();
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testBookingInvalidCard_TC_UI_07");
     logger.info("[US-304][TC-304.3][Thread {}] Booking invalid card", Thread.currentThread().getId());
         String pageSource = driver.getPageSource();
         boolean hasError = pageSource.contains("error") || pageSource.contains("failed") || pageSource.contains("Invalid") || pageSource.contains("purchase");
@@ -217,7 +221,6 @@ public class BlazeDemoUITest {
     driver.findElement(By.name("toPort")).sendKeys("London");
     driver.findElement(By.cssSelector("input[type='submit']")).click();
     driver.findElement(By.cssSelector("input[type='submit']")).click();
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testChooseFirstFlight_TC_UI_08");
         logger.info("[US-303][TC-303.1][Thread {}] Choose first flight", Thread.currentThread().getId());
         // Assert that the purchase form is present
         boolean purchaseFormPresent = driver.findElements(By.id("inputName")).size() > 0;
@@ -249,7 +252,6 @@ public class BlazeDemoUITest {
             priceElement = driver.findElement(By.cssSelector("tr:nth-child(1) td:nth-child(2)"));
         }
     String priceOnPurchase = priceElement.getText().replaceAll("[^0-9.]", "");
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testVerifyPriceConsistency_TC_UI_09");
         logger.warn("[US-303][TC-303.2][Thread {}] Price consistency check: Reserve page price = {} | Purchase page price = {}", Thread.currentThread().getId(), priceOnReserve, priceOnPurchase);
         double reservePrice = 0.0;
         double purchasePrice = 0.0;
@@ -282,7 +284,6 @@ public class BlazeDemoUITest {
     driver.findElement(By.id("state")).sendKeys("UK");
     driver.findElement(By.id("zipCode")).sendKeys("WC2N");
     driver.findElement(By.cssSelector("input[type='submit']")).click();
-    ScreenshotUtil.takeScreenshot(driver, System.getProperty("executionId", "manual"), "testEndToEndBookingFlow_TC_UI_10");
     logger.info("[US-305][TC-305.1][Thread {}] End-to-end booking flow", Thread.currentThread().getId());
         Assert.assertTrue(driver.getPageSource().contains("ID") || driver.getPageSource().contains("Thank you for your purchase today!"));
     }
